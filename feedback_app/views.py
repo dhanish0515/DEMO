@@ -22,6 +22,18 @@ def show_feedback(request):
     return render(request, 'data_all.html', context)
 
 
+def edit_feedback(request, pk):
+    edits = Feedback.objects.get(pk=pk)
+    form = FeedbackForm(instance=edits)
+    return render(request, 'feedback_form.html', {'form': form})
+
+
+def delete_feedback(request, pk):
+    remove = Feedback.objects.get(pk=pk)
+    remove.delete()
+    form = Feedback.objects.all()
+    return render(request, 'data_all.html', {'form': form})
+
 
 
 

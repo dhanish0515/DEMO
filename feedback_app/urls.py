@@ -3,5 +3,7 @@ from . import views
 
 urlpatterns = [
     path('feedback', views.submit_feedback, name='feedback'),
-    path('submission', views.show_feedback)
+    path('submission', views.show_feedback, name='submission'),
+    path('edit/<pk>', views.edit_feedback, name='edit'),
+    path('delete/<pk>', views.delete_feedback, name='delete'),
 ]
