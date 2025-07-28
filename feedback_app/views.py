@@ -1,3 +1,5 @@
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from feedback_app.forms import FeedbackForm
 from feedback_app.models import Feedback
@@ -33,6 +35,31 @@ def delete_feedback(request, pk):
     remove.delete()
     form = Feedback.objects.all()
     return render(request, 'data_all.html', {'form': form})
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('feedback')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
+
+def signin_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('feedback')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'signin.html', {'form': form})
+
 
 
 
